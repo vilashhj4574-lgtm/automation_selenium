@@ -1,0 +1,128 @@
+def area_create():
+    # wait.until(EC.visibility_of_element_located((By.XPATH, "//a[@href='/System/DashboardConfigCloud']")))
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='/System/DashboardConfigCloud']"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Area Group Management']/parent::a"))).click()
+    # wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@role='listitem' and.//div[normalize-space()='NI01']/parent::div"))).click()
+    company = "NI01"
+    # # xpath = f"//div[normalize-space()='{company}']/ancestor::div[@role='listitem']"
+    # # wait.until(EC.element_to_be_clickable((By.XPATH, xpath))).click()
+    # wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Add']/parent::button"))).click()
+
+    xpath_company = f"""//h4[normalize-space()='COMPANY']/ancestor::div[contains(@class,'col')]//div[normalize-space()='{company}']"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_company))).click()
+    xpath_add = f"""//h4[normalize-space()='COUNTRY']/ancestor::div[contains(@class,'col')]//button[.//span[normalize-space()='Add']]"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_add))).click()
+    company_name = wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@placeholder='Input the new country']")))
+    company_name.send_keys("Norway")
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']/parent::button"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='OK']/parent::button"))).click()
+    
+    country = "Norway"
+    xpath_country = f"""//h4[normalize-space()='COUNTRY']/ancestor::div[contains(@class,'col')]//div[normalize-space()='{country}']"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_country))).click()
+    xpath_add = f"""//h4[normalize-space()='REGION']/ancestor::div[contains(@class,'col')]//button[.//span[normalize-space()='Add']]"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_add))).click()
+    # xpath = f"//div[normalize-space()='{country}']/ancestor::div[@role='listitem']"
+    # wait.until(EC.element_to_be_clickable((By.XPATH, xpath))).click()
+    # wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Add']/ancestor::button"))).click()
+    region_name = wait.until(EC.visibility_of_element_located((By.XPATH, "//div//input[@placeholder='Input the new region']")))
+    region_name.send_keys("Norwayy")
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']/parent::button"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='OK']/parent::button"))).click()
+
+    region = "Norwayy"
+    # xpath = f"//div[normalize-space()='{region}']/ancestor::div[@role='listitem']"
+    # wait.until(EC.element_to_be_clickable((By.XPATH, xpath))).click()
+    # wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Add']/parent::button"))).click()
+
+    xpath_region = f"""//h4[normalize-space()='REGION']/ancestor::div[contains(@class,'col')]//div[normalize-space()='{region}']"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_region))).click()
+    xpath_add = f"""//h4[normalize-space()='CITY']/ancestor::div[contains(@class,'col')]//button[.//span[normalize-space()='Add']]"""
+    wait.until(EC.element_to_be_clickable((By.XPATH, xpath_add))).click()
+    city_name = wait.until(EC.visibility_of_element_located((By.XPATH, "//input[@placeholder='Input the new city']"))).click()
+    city_name.send_keys("Norway")
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Save']/parent::button"))).click()
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='OK']/parent::button"))).click()
+
+
+drop down
+
+def select_dropdown(label, option):
+
+    # Click dropdown using its label
+    dropdown = wait.until(EC.element_to_be_clickable((
+            By.XPATH,
+            f"//label[normalize-space()='{label}']/ancestor::div[contains(@class,'v-input')]//div[@role='button']"
+        )))
+
+    dropdown.click()
+    wait.until(
+    EC.visibility_of_element_located((By.XPATH, "//div[contains(@class,'menuable__content__active')]")))
+
+    time.sleep(1)
+
+    # Wait for dropdown menu
+    wait.until(
+        EC.visibility_of_element_located(
+            (By.XPATH, "//div[@role='listbox']")
+        ) )
+
+    while True:
+
+        try:
+
+            item = driver.find_element(
+                By.XPATH,
+                f"//div[@role='option']//div[normalize-space()='{option}']"
+            )
+
+            driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});",
+                item
+            )
+
+            driver.execute_script("arguments[0].click();", item)
+
+            break
+
+        except NoSuchElementException:
+
+            listbox = driver.find_element(
+                By.XPATH,
+                "//div[@role='listbox']"
+            )
+
+            driver.execute_script(
+                "arguments[0].scrollTop += 250;",
+                listbox
+            )
+
+            time.sleep(.3)
+
+
+ the below is for the drop down in the esl to operate 
+
+def open_dropdown(dropdown_id, option):
+    dropdown = wait.until(
+        EC.element_to_be_clickable((By.XPATH,f"//input[@id='{dropdown_id}']/ancestor::div[@role='button']")))
+
+    driver.execute_script("arguments[0].scrollIntoView({block:'center'});", dropdown)
+    dropdown.click()
+
+    option = wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@role='option'][.//div[normalize-space()='INDIA']]")))
+    option.click()
+
+
+upload product_search
+
+    x=wait.until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Input Product ID']")))
+    x.click()
+    x.send_keys("TR62")
+    wait.until(EC.element_to_be_clickable((By.XPATH,"//Span[normalize-space()='Search']/parent::button"))).click()
+
+
+
+way to find the exist of path 
+
+    inputs = driver.find_elements(By.XPATH, "//input[@placeholder='Input Active Count Value(1~225, unit:1)']")
+    print("Number of file inputs:", len(inputs))
