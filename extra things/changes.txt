@@ -126,3 +126,98 @@ way to find the exist of path
 
     inputs = driver.find_elements(By.XPATH, "//input[@placeholder='Input Active Count Value(1~225, unit:1)']")
     print("Number of file inputs:", len(inputs))
+
+        inputs = driver.find_elements(By.XPATH, "//label[normalize-space()='Button 1 (Main)']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']")
+    print("Number of file inputs:", len(inputs))
+
+
+
+
+
+    to check how many ways are there , and hoe many paths are it finding and is it hidden or not 
+
+        print(x.get_attribute("outerHTML"))
+    # options = driver.find_elements(By.XPATH,f"//div[@role='option'][.//div[normalize-space()='{Button_2}']]")
+
+    # print("Found:", len(options))
+
+    # for i, opt in enumerate(options):
+    #     print(f"\nOption {i+1}")
+    #     print("Displayed:", opt.is_displayed())
+    #     print("Location:", opt.location)
+    #     print(opt.get_attribute("outerHTML"))
+
+
+    for the lael assign , the combobox extra tried things 
+
+    # # Click the combobox first
+#     # wait.until(EC.invisibility_of_element_located((By.XPATH, "//div[contains(@class,'v-overlay__scrim')]")))
+#     # time.sleep(0.5)
+# #     wait.until(EC.element_to_be_clickable((By.XPATH,"//div[@role='combobox']"))).click()
+# # # Now type into the input
+# #     time.sleep(1)
+# #     x = wait.until(EC.visibility_of_element_located((By.XPATH,"//div[@role='combobox']//input")))
+# #     x.send_keys(product)
+#     options = driver.find_elements(By.XPATH,f"//input[@placeholder='Input The Label Code']")
+#     print("Found:", len(options))
+
+#     for i, opt in enumerate(options):
+#         print(f"\nOption {i+1}")
+#         print("Displayed:", opt.is_displayed())
+#         print("Location:", opt.location)
+#         print(opt.get_attribute("outerHTML"))
+#     # x=wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,"input[placeholder='Input The ProductList']")))
+#     # x.click()
+#     # time.sleep(1)
+#     # x.send_keys(product)
+
+
+------------------------------------------------
+
+    # print(x.get_attribute("outerHTML"))
+    # options = driver.find_element(By.XPATH,f"//div[contains(@class,'v-application--wrap')]//input[@placeholder='Input The ProductList']")
+
+    # print(options.get_attribute("outerHTML"))
+---------------------------------------------------------
+    # print("Found:", len(options))
+    # for i, opt in enumerate(options):
+    #     print(f"\nOption {i+1}")
+    #     print("Displayed:", opt.is_displayed())
+    #     print("Location:", opt.location)
+    #     print(opt.get_attribute("outerHTML"))
+    # x = wait.until(EC.presence_of_element_located((By.XPATH, "//input[placeholder='Input The ProductList']")))
+    # x.send_keys(product)
+--------------------------------------
+
+to check the attributes if present 
+state = driver.find_element(By.XPATH,"//label[normalize-space()='Template Types by Label']/preceding-sibling::div//input[@role='checkbox']"
+).get_attribute("aria-checked")
+
+if state == "false":
+    checkbox.click()
+----------------------------------------
+ options = driver.find_elements(By.XPATH,f"//div[@role='option'][.//div[contains(normalize-space(), '{template_name}')]]")
+    print("Found:", len(options))
+
+    for i, opt in enumerate(options):
+        print(f"\nOption {i+1}")
+        print("Displayed:", opt.is_displayed())
+        print("Location:", opt.location)
+        print(opt.get_attribute("outerHTML"))
+------------------------------------------------------
+# def scroll_until_store(driver,Find, max_scrolls=30):
+
+#     scroll_box = driver.find_element(By.XPATH,
+#         "//div[contains(@class,'ps') and contains(@class,'ps--active-y')]")
+
+#     for _ in range(max_scrolls):
+
+#         try:
+#             store = driver.find_element(By.XPATH,f"//div[@class='v-list-item__title' and normalize-space()='{Find}']")
+#             return store
+
+#         except NoSuchElementException:
+#             driver.execute_script("arguments[0].scrollTop += 120;",scroll_box)
+#             time.sleep(0.2)
+
+#     raise Exception(f"{store_name} not found")

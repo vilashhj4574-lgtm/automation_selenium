@@ -28,21 +28,14 @@ def click_virtual_item(container_xpath, item_text):
     last_height = -1
 
     while True:
-
         try:
             element = container.find_element(By.XPATH,
-                f".//div[@role='listitem']//div[normalize-space()='{item_text}']"
-            )
+                f".//div[@role='listitem']//div[normalize-space()='{item_text}']")
 
             driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});",
-                element
-            )
+                "arguments[0].scrollIntoView({block:'center'});",element)
 
-            wait.until(
-                EC.element_to_be_clickable(element)
-            ).click()
-
+            wait.until(EC.element_to_be_clickable(element)).click()
             return
 
         except NoSuchElementException:
@@ -63,22 +56,16 @@ def click_virtual_item(container_xpath, item_text):
 def select_dropdown(label, option):
 
     # Click the dropdown
-    dropdown = wait.until(EC.element_to_be_clickable((
-            By.XPATH,
-            f"//label[normalize-space()='{label}']/ancestor::div[contains(@class,'v-input')]//div[@role='button']"
-        ))
-    )
+    dropdown = wait.until(EC.element_to_be_clickable((By.XPATH,
+            f"//label[normalize-space()='{label}']/ancestor::div[contains(@class,'v-input')]//div[@role='button']")))
 
     driver.execute_script("arguments[0].scrollIntoView({block:'center'});", dropdown)
     dropdown.click()
 
     # Wait for active menu
     menu = wait.until(
-        EC.visibility_of_element_located((
-            By.XPATH,
-            "//div[contains(@class,'menuable__content__active')]"
-        ))
-    )
+        EC.visibility_of_element_located((By.XPATH,
+            "//div[contains(@class,'menuable__content__active')]")))
 
     while True:
 
@@ -93,66 +80,43 @@ def select_dropdown(label, option):
             # ---------- REGION & CITY ----------
             else:
 
-                item = menu.find_element(
-                    By.XPATH,
-                    f".//div[@role='option'][.//div[@class='v-list-item__title' and normalize-space()='{option}']]"
-                )
-
-                driver.execute_script(
-                    "arguments[0].scrollIntoView({block:'center'});",
-                    item
-                )
+                item = menu.find_element(By.XPATH,f".//div[@role='option'][.//div[@class='v-list-item__title' and normalize-space()='{option}']]")
+                driver.execute_script("arguments[0].scrollIntoView({block:'center'});",item)
 
                 # Try normal click
                 try:
                     item.click()
 
                 except:
-
                     # Try ActionChains
                     try:
                         ActionChains(driver).move_to_element(item).pause(0.2).click().perform()
 
                     except:
-
                         # Final fallback
-                        driver.execute_script(
-                            "arguments[0].click();",
-                            item
-                        )
+                        driver.execute_script("arguments[0].click();",item)
 
             break
 
         except NoSuchElementException:
 
-            driver.execute_script(
-                "arguments[0].scrollTop += 250;",
-                menu
-            )
+            driver.execute_script("arguments[0].scrollTop += 250;",menu)
 
             time.sleep(0.3)
 
-# def scroll_until_store(driver, store_name, max_scrolls=30):
+# def scroll_until_store(driver,Find, max_scrolls=30):
 
-#     scroll_box = driver.find_element(
-#         By.XPATH,
-#         "//div[contains(@class,'ps') and contains(@class,'ps--active-y')]"
-#     )
+#     scroll_box = driver.find_element(By.XPATH,
+#         "//div[contains(@class,'ps') and contains(@class,'ps--active-y')]")
 
 #     for _ in range(max_scrolls):
 
 #         try:
-#             store = driver.find_element(
-#                 By.XPATH,
-#                 f"//div[@class='v-list-item__title' and normalize-space()='{store_name}']"
-#             )
+#             store = driver.find_element(By.XPATH,f"//div[@class='v-list-item__title' and normalize-space()='{Find}']")
 #             return store
 
 #         except NoSuchElementException:
-#             driver.execute_script(
-#                 "arguments[0].scrollTop += 120;",
-#                 scroll_box
-#             )
+#             driver.execute_script("arguments[0].scrollTop += 120;",scroll_box)
 #             time.sleep(0.2)
 
 #     raise Exception(f"{store_name} not found")
@@ -185,16 +149,12 @@ def login_to_website():
 login_to_website()
 
 
-
 def navigate_to_area_group_management():
     wait.until(EC.visibility_of_element_located((By.XPATH, "//div[@role='tab' and .//div[normalize-space()='Config']]")))
     wait.until(EC.invisibility_of_element_located((By.CLASS_NAME, "v-overlay__scrim")))
     wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@role='tab' and .//div[normalize-space()='Config']]"))).click()
     time.sleep(1)
     area_create()
-
-
-
 
 
 def area_create():
@@ -241,10 +201,6 @@ def area_create():
 # navigate_to_area_group_management()
 
 
-
-
-
-
 def store_create():
     wait.until(EC.element_to_be_clickable((By.XPATH, "//a[@href='/Store/StoreInfo']"))).click()
     time.sleep(2)
@@ -268,20 +224,12 @@ def store_create():
 # store_create()
 
 
-
-
-
-
-
 def go_to_esl():
     wait.until(EC.visibility_of_element_located((By.XPATH, "//div[@role='tab' and .//div[normalize-space()='ESL']]")))
     time.sleep(2)
     wait.until(EC.element_to_be_clickable((By.XPATH, "//div[@role='tab' and .//div[normalize-space()='ESL']]"))).click()
     
 # go_to_esl()
-
-
-
 
 
 def select_store():   
@@ -301,11 +249,6 @@ def select_store():
 select_store()
 
 
-
-
-
-
-
 def add_gateway():
     wait.until(EC.element_to_be_clickable((By.XPATH, "//span[normalize-space()='Gateway']"))).click()
     wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='Add']/parent::button"))).click()
@@ -320,10 +263,6 @@ def add_gateway():
     wait.until(EC.element_to_be_clickable((By.XPATH,"//span[normalize-space()='OK']/parent::button"))).click()
 
 # add_gateway()
-
-
-
-
 
 
 def template_add():
@@ -371,9 +310,6 @@ def template_add():
 # template_add()
 
 
-
-
-
 Delete_product =["TR65","TR67"]
 product_ID=["TR61","TR63","TR62"]
 def go_to_product_page():
@@ -382,11 +318,7 @@ def go_to_product_page():
     # add_product()
     # product_upload()
 
-go_to_product_page()
-
-
-
-
+# go_to_product_page()
 
 
 def add_product():
@@ -412,8 +344,6 @@ def add_product():
 
 
 
-
-
 def product_upload():
     wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='File Upload']"))).click()
     file_path=r"C:\selenium_SAAS\Data\upload_file.csv"
@@ -421,9 +351,6 @@ def product_upload():
     x.send_keys(file_path)
     wait.until(EC.presence_of_element_located((By.XPATH,"//div[contains(@class,'popup')]//span[normalize-space()='Upload']"))).click()
     wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='OK']"))).click()
-
-
-
 
 
 def select_product_to_blink_led_through_product():
@@ -444,11 +371,6 @@ def select_product_to_blink_led_through_product():
 # select_product_to_blink_led_through_product()
 
 
-
-
-
-
-
 def delete_product():
     for prod in Delete_product:
         x=wait.until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Input Product ID']")))
@@ -466,8 +388,6 @@ def delete_product():
         time.sleep(2)
 
 # delete_product()
-
-
 
 
 Name,ON_Time,OF_time,IDLE_time,Active_count="LED1",20,30,2,5
@@ -504,15 +424,104 @@ def LED_pattern_delete():
     wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Delete']"))).click()
     wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Yes']"))).click()
    
-LED_pattern_delete()
+# LED_pattern_delete()
+
+Select_btn_Name='SUCESS1'
+
+def Button_configuration_Delete():
+    wait.until(EC.presence_of_element_located((By.XPATH,"//a[@href='/Multifunction/LED']"))).click()
+    time.sleep(1)
+    wait.until(EC.visibility_of_element_located((By.XPATH,"//a[@href='/Multifunction/ButtonConfig']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//tr[td[normalize-space()='{Select_btn_Name}']]//td[1]"))).click()
+    time.sleep(1)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Delete']"))).click()
+    wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Yes']"))).click()
+
+# Button_configuration_Delete()
 
 
-def Button_configuration_ADD():
-    wait.until(EC.presence_of_element_located((By.XPATH,"//a[@href='/Multifunction/ButtonConfig']"))).click()
-    
+button_name="SUCESS1"
+Button_1="Led Off"
+Button_2="Clear"
+Button_3="Clear"
+Button_1_Long="Right Page"
+Button_2_Long="Right Page"
 
-# Button_configuration_ADD()
+def button_configuratio_add():
+    wait.until(EC.presence_of_element_located((By.XPATH,"//a[@href='/Multifunction/LED']"))).click()
+    time.sleep(1)
+    wait.until(EC.visibility_of_element_located((By.XPATH,"//a[@href='/Multifunction/ButtonConfig']"))).click()
+    time.sleep(1)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//div[@id='contentWrapper']//span[normalize-space()='New']"))).click()
+    time.sleep(0.5)
+    x=wait.until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Input The Button Config Name']")))
+    x.send_keys(button_name)
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//label[normalize-space()='Button 1 (Main)']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//div[@role='listbox']//div[@role='option'][.//div[normalize-space()='{Button_1}']]"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//label[normalize-space()='Button 2 (Sub)']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//div[contains(@class,'menuable__content__active')]//div[@role='listbox']//div[@role='option'][.//*[normalize-space()='{Button_2}']]"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//label[normalize-space()='Button 3 (Extend)']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//div[contains(@class,'menuable__content__active')]//div[@role='listbox']//div[@role='option'][.//*[normalize-space()='{Button_3}']]"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//label[normalize-space()='Button 1 (Main) Long Press']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//div[contains(@class,'menuable__content__active')]//div[@role='listbox']//div[@role='option'][.//*[normalize-space()='{Button_1_Long}']]"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//label[normalize-space()='Button 2 (Sub) Long Press']/ancestor::div[contains(@class,'v-input__control')]//div[@role='button']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,f"//div[contains(@class,'menuable__content__active')]//div[@role='listbox']//div[@role='option'][.//*[normalize-space()='{Button_2_Long}']]"))).click()
+    time.sleep(1)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Save']"))).click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//div[contains(@class,'popup-success')]//span[normalize-space()='OK']/parent::button"))).click()
 
+
+# button_configuratio_add()
+
+
+label_code="0CE1FC77B1D7"
+product=["TR61","TR62","TR63"]
+template_name='MOB1'
+
+def label_assign():
+
+    driver.find_element(By.XPATH, "//a[@href='/Label/LabelInfoCloud']").click()
+    time.sleep(2)
+    driver.find_element(By.XPATH, "//a[@href='/Label/LabelOperations']").click()
+    time.sleep(0.5)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Assign']/parent::button"))).click()
+    x=wait.until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Input The Label Code']")))
+    x.send_keys(label_code)
+    time.sleep(1)
+    x=wait.until(EC.presence_of_element_located((By.XPATH,"//div[contains(@class,'v-application--wrap')]//div[normalize-space()='** After Input Press Enter.']/ancestor::div[1]/preceding-sibling::div")))
+    x.click()
+    time.sleep(1)
+    for i in product:
+        x = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Input The ProductList']")))
+        x.send_keys(i)
+        time.sleep(0.5)
+        x.send_keys(Keys.ENTER)
+        time.sleep(0.5)
+
+    checkbox = driver.find_element(By.XPATH,"//label[normalize-space()='Template Types by Label']/preceding-sibling::div[contains(@class,'v-input--selection-controls__input')]")
+    checkbox.click()
+    wait.until(EC.presence_of_element_located((By.XPATH,"//input[@placeholder='Select The Template Type']//ancestor::div[contains(@class,'v-select__slot')]"))).click()
+    time.sleep(1)
+
+    x=wait.until(EC.presence_of_element_located((By.XPATH,f"//div[@role='option'][.//div[contains(normalize-space(), '{template_name}')]]")))
+    ActionChains(driver).double_click(x).perform()
+    time.sleep(1)
+    wait.until(EC.presence_of_element_located((By.XPATH,"//span[normalize-space()='Save']"))).click()
+
+
+label_assign()
 
 
 
